@@ -1,0 +1,94 @@
+/* ==========================================================================
+   WeatherBlend AI - Design Tokens & Theme Variables
+   Professional Navy Blue + Forest Green + Alert Red Theme
+   ========================================================================== */
+
+:root {
+  /* Primary & Accent Brand Colors */
+  --color-navy: #0B1F3A;
+  --color-navy-light: #12345B;
+  --color-navy-hover: #1A4270;
+  
+  --color-forest-green: #1F5D42;
+  --color-forest-green-light: #2E6B4F;
+  --color-forest-green-subtle: #E8F2EC;
+  --color-forest-green-border: #BCD5C7;
+  
+  --color-alert-red: #C62828;
+  --color-alert-red-light: #D32F2F;
+  --color-alert-red-subtle: #FDEDED;
+  --color-alert-red-border: #F5C2C2;
+
+  --color-amber: #B45309;
+  --color-amber-subtle: #FEF3C7;
+  --color-amber-border: #FCD34D;
+
+  /* Backward Compatibility Tokens mapped to new theme */
+  --color-deep-blue: #0B1F3A;
+  --color-rain-blue: #12345B;
+  --color-sky-blue: #1F5D42;
+  --color-green: #1F5D42;
+  --color-red: #C62828;
+
+  /* Model Indicator Colors */
+  --model-ai: #12345B;              /* Navy for AI/ML */
+  --model-nwp: #1F5D42;             /* Forest Green for physical NWP */
+  --model-ensemble: #5C527F;        /* Muted Slate Purple for EPS */
+  --model-blended: #0B1F3A;         /* Primary Navy for Blended */
+
+  /* Backgrounds */
+  --bg-main: #F6F8F7;               /* Off-white light neutral background */
+  --bg-secondary: #FFFFFF;          /* Pure white */
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FAFBFA;
+  --bg-subtle: #F0F4F2;             /* Soft neutral tint */
+  --bg-active-nav: #12345B;         /* Active sidebar navy item */
+  --bg-active-nav-light: #E8EEF5;
+
+  /* Borders & Dividers */
+  --border-color: #DDE3DE;          /* Soft neutral gray */
+  --border-light: #E9EFEA;
+  --border-focus: #1F5D42;
+
+  /* Typography Colors */
+  --text-primary: #0B1F3A;          /* High contrast deep navy */
+  --text-secondary: #52635B;        /* Muted slate-forest for captions/subtitles */
+  --text-muted: #7D8F86;            /* Placeholder text */
+  --text-inverse: #FFFFFF;
+  --text-accent: #1F5D42;
+
+  /* Typography Sizes & Weights */
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.844rem;   /* 13.5px */
+  --font-size-md: 0.938rem;   /* 15px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 2rem;      /* 32px */
+  --font-size-4xl: 2.5rem;    /* 40px */
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-card: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-subtle: 0 1px 3px rgba(11, 31, 58, 0.04), 0 1px 2px rgba(11, 31, 58, 0.02);
+  --shadow-card: 0 2px 6px rgba(11, 31, 58, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --shadow-hover: 0 4px 12px rgba(11, 31, 58, 0.08), 0 2px 4px rgba(0, 0, 0, 0.03);
+  --shadow-drawer: -4px 0 24px rgba(11, 31, 58, 0.15);
+
+  /* Layout Dimensions */
+  --sidebar-width: 248px;
+  --header-height: 64px;
+
+  /* Micro-interactions timing */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}

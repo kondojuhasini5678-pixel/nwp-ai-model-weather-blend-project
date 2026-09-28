@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeatherBlend AI | Hybrid AI–NWP Weather Forecasting</title>
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-Zcn6HvY/4ddhOYsWp6FY45041a9675276e053b9a117b3cfb1b115598d1a1005b" crossorigin="anonymous" />
+
+  <!-- App Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/map.css">
+  <link rel="stylesheet" href="css/chat.css">
+
+  <!-- Chart.js & Leaflet JS via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Mobile Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ==========================================================================
+       1. VERTICAL LEFT SIDEBAR (Navy Blue #0B1F3A)
+       Strictly 5 navigation items: Home, Forecast, Weather Map, Alerts, AI Assistant
+       Professional line icons only. Zero decorative emojis.
+       ========================================================================== -->
+  <aside class="sidebar" id="appSidebar">
+    <div class="sidebar-brand">
+      <div class="brand-title-wrap">
+        <div class="brand-icon-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">WeatherBlend AI</div>
+          <div class="brand-subtitle">Hybrid AI–NWP Forecasting</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strictly 5 Primary Navigation Items -->
+    <nav class="sidebar-nav">
+      <!-- 1. Home -->
+      <a class="nav-link active" data-view="home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span>Home</span>
+      </a>
+
+      <!-- 2. Forecast -->
+      <a class="nav-link" data-view="forecast">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="M20 12h2"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+          <path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"></path>
+          <path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"></path>
+        </svg>
+        <span>Forecast</span>
+      </a>
+
+      <!-- 3. Weather Map -->
+      <a class="nav-link" data-view="map">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+          <line x1="9" y1="3" x2="9" y2="18"></line>
+          <line x1="15" y1="6" x2="15" y2="21"></line>
+        </svg>
+        <span>Weather Map</span>
+      </a>
+
+      <!-- 4. Alerts -->
+      <a class="nav-link" data-view="alerts">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <span>Alerts</span>
+      </a>
+
+      <!-- 5. AI Assistant -->
+      <a class="nav-link" data-view="assistant">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>AI Assistant</span>
+      </a>
+
+      <!-- 6. Get Started -->
+      <a class="nav-link" data-view="get-started">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+        <span>Get Started</span>
+      </a>
+    </nav>
+
+    <!-- Operational Status at Bottom -->
+    <div class="sidebar-footer">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span>Forecast System Operational</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       MAIN APP WRAPPER
+       ========================================================================== -->
+  <div class="main-wrapper">
+    <!-- Top Header Bar with Forecast Controls -->
+    <header class="top-header">
+      <div class="header-left">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
+
+        <div class="header-controls">
+          <!-- Location Control -->
+          <div class="control-group">
+            <span class="control-label">Location:</span>
+            <select class="control-select" id="locationSelect">
+              <!-- Dynamically populated -->
+            </select>
+          </div>
+
+          <!-- Date Control -->
+          <div class="control-group">
+            <span class="control-label">Date:</span>
+            <input type="text" class="control-input" id="dateInput" value="24 September 2026" readonly style="width: 135px;">
+          </div>
+
+          <!-- Lead Time Control -->
+          <div class="control-group">
+            <span class="control-label">Forecast Period:</span>
+            <select class="control-select" id="leadTimeSelect">
+              <option value="6h">6 Hours</option>
+              <option value="12h">12 Hours</option>
+              <option value="24h">24 Hours</option>
+              <option value="48h" selected>48 Hours</option>
+              <option value="72h">72 Hours</option>
+              <option value="120h">120 Hours</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Small Unobtrusive Update Status -->
+      <div class="header-right">
+        <div class="data-sync-indicator">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span id="headerLiveTime">Updated recently</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+
+      <!-- ==========================================================================
+           PAGE 1: HOME
+           Centered around ONE primary forecast card, 3 compact summaries,
+           alert banner (only when active), and simple model blend visual.
+           ========================================================================== -->
+      <section class="page-view active" id="view-home">
+        <!-- Page Header Block (Clean) -->
+        <div class="page-header-block">
+          <div>
+            <h1 class="page-heading">Hybrid Weather Forecast</h1>
+            <p class="page-subheading">Multiple weather models are combined to provide one clear forecast.</p>
+          </div>
+        </div>
+
+        <!-- MAIN FORECAST CARD (Visual and functional center) -->
+        <div class="hero-forecast-card">
+          <div class="hero-forecast-top">
+            <div class="blended-badge">
+              <span class="blended-badge-dot"></span>
+              <span>Blended Forecast</span>
+              <span style="opacity: 0.6; font-size: 11px;">&bull; AI + NWP + Ensemble</span>
+            </div>
+
+            <!-- Metric Switcher -->
+            <div class="segmented-control">
+              <button class="seg-btn metric-seg-btn active" data-metric="rainfall">Rainfall</button>
+              <button class="seg-btn metric-seg-btn" data-metric="temperature">Temperature</button>
+              <button class="seg-btn metric-seg-btn" data-metric="wind">Wind</button>
+            </div>
+          </div>
+
+          <!-- Large Primary Weather Value -->
+          <div class="hero-primary-val-row">
+            <span class="hero-primary-val" id="heroPrimaryVal">42 mm</span>
+            <span class="hero-primary-label" id="heroPrimaryLabel">Expected rainfall</span>
+          </div>
+
+          <!-- Prob & Confidence -->
+          <div class="hero-meta-row">
+            <div class="hero-meta-item">
+              Rainfall probability: <strong id="heroRainProb">78%</strong>
+            </div>
+            <div class="hero-meta-item">
+              Confidence: <span class="confidence-tag-high" id="heroConfidenceTag">High Agreement</span>
+            </div>
+          </div>
+
+          <!-- Simple Forecast Timeline (Today | +24h | +48h | +72h) -->
+          <div class="simple-timeline">
+            <button class="timeline-step" data-leadtime="6h">Today</button>
+            <button class="timeline-step" data-leadtime="24h">+24h</button>
+            <button class="timeline-step active" data-leadtime="48h">+48h</button>
+            <button class="timeline-step" data-leadtime="72h">+72h</button>
+          </div>
+
+          <!-- Blended Timeline Chart -->
+          <div style="height: 260px; width: 100%; position: relative; margin-top: 24px;">
+            <canvas id="blendedTimelineChart"></canvas>
+          </div>
+        </div>
+
+        <!-- THREE COMPACT WEATHER SUMMARIES -->
+        <div class="compact-weather-grid">
+          <!-- 1. Temperature -->
+          <div class="compact-weather-card">
+            <div class="compact-weather-info">
+              <span class="compact-weather-label">Temperature</span>
+              <span class="compact-weather-val" id="summaryTempVal">32°C</span>
+              <span class="compact-weather-sub" id="summaryTempSub">Expected maximum</span>
+            </div>
+            <div class="compact-weather-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- 2. Wind -->
+          <div class="compact-weather-card">
+            <div class="compact-weather-info">
+              <span class="compact-weather-label">Wind</span>
+              <span class="compact-weather-val" id="summaryWindVal">28 km/h</span>
+              <span class="compact-weather-sub" id="summaryWindSub">Southwest breeze</span>
+            </div>
+            <div class="compact-weather-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"></path>
+                <path d="M9.6 4.6A2 2 0 1 1 11 8H2"></path>
+                <path d="M12.6 19.4A2 2 0 1 0 14 16H2"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- 3. Rainfall -->
+          <div class="compact-weather-card">
+            <div class="compact-weather-info">
+              <span class="compact-weather-label">Rainfall</span>
+              <span class="compact-weather-val" id="summaryRainVal">42 mm</span>
+              <span class="compact-weather-sub" id="summaryRainSub">78% probability</span>
+            </div>
+            <div class="compact-weather-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="16" y1="13" x2="16" y2="21"></line>
+                <line x1="8" y1="13" x2="8" y2="21"></line>
+                <line x1="12" y1="15" x2="12" y2="23"></line>
+                <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMPACT ALERT SECTION (Red only when there is an active alert) -->
+        <div class="compact-alert-banner" id="homeAlertBanner">
+          <div class="compact-alert-content">
+            <div class="compact-alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div>
+              <div class="compact-alert-title" id="homeAlertTitle">Extreme Weather Alert</div>
+              <div class="compact-alert-desc" id="homeAlertDesc">Heavy rainfall possible across metropolitan region.</div>
+            </div>
+          </div>
+          <button class="btn btn-outline" style="font-size: 12px; padding: 6px 12px;" onclick="appState.setView('alerts')">
+            View Alerts
+          </button>
+        </div>
+
+        <!-- HOW THE FORECAST IS COMBINED (Simple, accessible model blend section) -->
+        <div class="model-blend-section">
+          <div class="card-title">How the forecast is combined</div>
+          <div class="blend-bars-container">
+            <!-- AI -->
+            <div class="blend-bar-row">
+              <div class="blend-bar-header">
+                <span>AI Weather Model</span>
+                <span id="homeAiWeight">45%</span>
+              </div>
+              <div class="blend-bar-track">
+                <div class="blend-bar-fill ai" id="homeAiBar" style="width: 45%;"></div>
+              </div>
+            </div>
+
+            <!-- NWP -->
+            <div class="blend-bar-row">
+              <div class="blend-bar-header">
+                <span>Physical NWP Model</span>
+                <span id="homeNwpWeight">35%</span>
+              </div>
+              <div class="blend-bar-track">
+                <div class="blend-bar-fill nwp" id="homeNwpBar" style="width: 35%;"></div>
+              </div>
+            </div>
+
+            <!-- Ensemble -->
+            <div class="blend-bar-row">
+              <div class="blend-bar-header">
+                <span>Ensemble Forecast</span>
+                <span id="homeEnsWeight">20%</span>
+              </div>
+              <div class="blend-bar-track">
+                <div class="blend-bar-fill ensemble" id="homeEnsBar" style="width: 20%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="blend-plain-summary" id="homeBlendSummary">
+            Today's forecast combines AI, physical weather models and ensemble forecasts based on their recent performance.
+          </div>
+        </div>
+
+        <!-- Hero Identity Tagline -->
+        <div class="blended-hero-tag">
+          <span>AI Model + NWP Model + Ensemble &rarr; <strong>BLENDED FORECAST</strong></span>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           PAGE 2: FORECAST
+           Clean, single-scroll layout:
+           1. Forecast Chart
+           2. Forecast Summary
+           3. Model Blend (AI / NWP / Ensemble)
+           Strictly single-scroll clean layout
+           ========================================================================== -->
+      <section class="page-view" id="view-forecast">
+        <div class="page-header-block">
+          <div>
+            <h1 class="page-heading">Forecast Overview</h1>
+            <p class="page-subheading">Blended multi-model forecast combining AI and physical weather simulations.</p>
+          </div>
+        </div>
+
+        <!-- 1. Main Forecast Chart -->
+        <div class="card" style="margin-bottom: 20px;">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Forecast Timeline</div>
+              <div class="card-subtitle">Projected weather trends across forecast periods</div>
+            </div>
+            <!-- Lead Time Selector -->
+            <div class="segmented-control">
+              <button class="seg-btn metric-seg-btn active" data-metric="rainfall">Rainfall</button>
+              <button class="seg-btn metric-seg-btn" data-metric="temperature">Temperature</button>
+              <button class="seg-btn metric-seg-btn" data-metric="wind">Wind</button>
+            </div>
+          </div>
+          <div style="height: 340px; width: 100%; position: relative;">
+            <canvas id="forecastOverviewChart"></canvas>
+          </div>
+        </div>
+
+        <!-- 2. Forecast Summary Strip -->
+        <div class="card" style="margin-bottom: 20px;">
+          <div class="card-title" style="margin-bottom: 14px;">Forecast Summary</div>
+          <div class="forecast-summary-strip">
+            <div class="forecast-summary-item">
+              <span class="forecast-summary-label">Rainfall</span>
+              <span class="forecast-summary-val" id="forecastSumRain">42 mm</span>
+            </div>
+            <div class="forecast-summary-item">
+              <span class="forecast-summary-label">Temperature</span>
+              <span class="forecast-summary-val" id="forecastSumTemp">32°C</span>
+            </div>
+            <div class="forecast-summary-item">
+              <span class="forecast-summary-label">Wind</span>
+              <span class="forecast-summary-val" id="forecastSumWind">28 km/h</span>
+            </div>
+            <div class="forecast-summary-item">
+              <span class="forecast-summary-label">Confidence</span>
+              <span class="forecast-summary-val" id="forecastSumConf" style="color: var(--color-forest-green);">High</span>
+            </div>
+            <div class="forecast-summary-item">
+              <span class="forecast-summary-label">Extreme Weather</span>
+              <span class="forecast-summary-val" id="forecastSumExtreme">Moderate Risk</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Model Blend Visualization -->
+        <div class="card">
+          <div class="card-title">Model Blend</div>
+          <div class="card-subtitle">How different forecast systems contribute to today's prediction</div>
+
+          <div class="blend-bars-container" style="margin-top: 18px;">
+            <div class="blend-bar-row">
+              <div class="blend-bar-header">
+                <span>AI Weather Model</span>
+                <span id="forecastBlendAi">45%</span>
+              </div>
+              <div class="blend-bar-track">
+                <div class="blend-bar-fill ai" id="forecastBlendAiBar" style="width: 45%;"></div>
+              </div>
+            </div>
+
+            <div class="blend-bar-row">
+              <div class="blend-bar-header">
+                <span>Physical NWP Model</span>
+                <span id="forecastBlendNwp">35%</span>
+              </div>
+              <div class="blend-bar-track">
+                <div class="blend-bar-fill nwp" id="forecastBlendNwpBar" style="width: 35%;"></div>
+              </div>
+            </div>
+
+            <div class="blend-bar-row">
+              <div class="blend-bar-header">
+                <span>Ensemble Forecast</span>
+                <span id="forecastBlendEns">20%</span>
+              </div>
+              <div class="blend-bar-track">
+                <div class="blend-bar-fill ensemble" id="forecastBlendEnsBar" style="width: 20%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="blend-plain-summary" id="forecastBlendDesc" style="margin-top: 14px;">
+            AI models receive higher weight in this forecast cycle because of stronger local accuracy under current moisture patterns.
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           PAGE 3: WEATHER MAP
+           Leaflet Map with clean, simplified layers:
+           - Blended Forecast (Default)
+           - Rainfall
+           - Temperature
+           - Wind
+           - Alerts
+           Strictly REMOVED: Model Contributions & Forecast Error
+           ========================================================================== -->
+      <section class="page-view" id="view-map">
+        <div class="page-header-block">
+          <div>
+            <h1 class="page-heading">Weather Map</h1>
+            <p class="page-subheading">Regional weather map displaying blended forecasts, rain, temperature, and wind.</p>
+          </div>
+        </div>
+
+        <div class="map-page-container">
+          <!-- Simplified Map Controls -->
+          <div class="card map-controls-card">
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">
+              Map Layers:
+            </span>
+            <div class="map-layer-selector">
+              <button class="layer-btn active" data-layer="blended">Blended Forecast</button>
+              <button class="layer-btn" data-layer="rainfall">Rainfall</button>
+              <button class="layer-btn" data-layer="temperature">Temperature</button>
+              <button class="layer-btn" data-layer="wind">Wind</button>
+              <button class="layer-btn" data-layer="extreme">Alerts</button>
+            </div>
+          </div>
+
+          <!-- Leaflet Map Container -->
+          <div class="map-viewport-wrapper">
+            <div id="weatherMap"></div>
+
+            <!-- Compact Map Legend -->
+            <div class="map-legend-overlay">
+              <div class="legend-title" id="mapLegendTitle">Blended Rainfall Intensity (mm)</div>
+              <div class="legend-gradient-bar" id="mapLegendBar"></div>
+              <div class="legend-labels">
+                <span id="legendLabelMin">0 mm (Light)</span>
+                <span id="legendLabelMid">30 mm</span>
+                <span id="legendLabelMax">80+ mm (Heavy)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           PAGE 4: ALERTS
+           Clean, accessible weather alerts categorized simply:
+           All | Heavy Rain | Heat | High Wind
+           Forest green = normal, Red = active alert. Strictly zero emojis.
+           ========================================================================== -->
+      <section class="page-view" id="view-alerts">
+        <div class="page-header-block">
+          <div>
+            <h1 class="page-heading">Weather Alerts</h1>
+            <p class="page-subheading">Active warnings and weather notices for your region.</p>
+          </div>
+        </div>
+
+        <!-- Simplified Filter Pills -->
+        <div class="map-layer-selector" style="margin-bottom: 20px;">
+          <button class="layer-btn alert-filter-btn active" data-category="all">All</button>
+          <button class="layer-btn alert-filter-btn" data-category="Heavy Rainfall">Heavy Rain</button>
+          <button class="layer-btn alert-filter-btn" data-category="Heat Wave">Heat</button>
+          <button class="layer-btn alert-filter-btn" data-category="High Wind">High Wind</button>
+        </div>
+
+        <div id="alertsGrid">
+          <!-- Dynamically populated from alerts.js -->
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           PAGE 5: AI ASSISTANT (Weather Assistant)
+           Accessible, user-friendly weather assistant.
+           Navy header, forest-green accent, 4 simple suggestions, plain language.
+           ========================================================================== -->
+      <section class="page-view" id="view-assistant">
+        <div class="assistant-container">
+          <div class="assistant-header">
+            <div class="assistant-title-group">
+              <div class="assistant-avatar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+                  <circle cx="12" cy="14" r="6"></circle>
+                </svg>
+              </div>
+              <div>
+                <div class="assistant-title">Weather Assistant</div>
+                <div class="assistant-sub">Ask about the forecast, rain, temperature, wind or weather alerts.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Stream Area -->
+          <div class="chat-messages-area" id="chatMessagesArea">
+            <!-- Initial Greeting -->
+            <div class="message-row ai-msg">
+              <div class="assistant-avatar" style="width: 32px; height: 32px; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+                  <circle cx="12" cy="14" r="6"></circle>
+                </svg>
+              </div>
+              <div style="flex: 1;">
+                <div class="message-bubble">
+                  Hello! I'm your Weather Assistant. You can ask me questions about today's forecast, expected rain, temperature, wind, or any active weather alerts.
+                </div>
+                <div class="message-time">Ready</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Exactly 4 Simple Suggested Questions -->
+          <div class="suggested-questions-tray">
+            <div class="suggested-label">Suggested Questions</div>
+            <div class="suggested-chips-list">
+              <button class="question-chip">Will it rain?</button>
+              <button class="question-chip">What will the temperature be?</button>
+              <button class="question-chip">Is there any weather alert?</button>
+              <button class="question-chip">What is the forecast for the next 3 days?</button>
+            </div>
+          </div>
+
+          <!-- Input Bar -->
+          <div class="chat-input-bar">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about the weather...">
+            <button class="btn btn-primary chat-send-btn" id="chatSendBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+              Send
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           PAGE 6: GET STARTED
+           Clean Sign Up / Sign In view. Strictly zero decorative emojis.
+           ========================================================================== -->
+      <section class="page-view" id="view-get-started">
+        <div class="auth-wrapper">
+          <div class="auth-card">
+            <div class="auth-header">
+              <h2 class="auth-title">WeatherBlend AI Platform</h2>
+              <p class="auth-subtitle">Access operational multi-model weather intelligence, customized alerts, and localized forecasts.</p>
+            </div>
+
+            <!-- Tab Switcher between Sign Up & Sign In -->
+            <div class="auth-tabs">
+              <button class="auth-tab-btn active" data-auth="signup">Sign Up</button>
+              <button class="auth-tab-btn" data-auth="signin">Sign In</button>
+            </div>
+
+            <!-- Sign Up Form (Section 26) -->
+            <form id="signUpForm" onsubmit="event.preventDefault(); alert('Account registration successful. Welcome to WeatherBlend AI.');">
+              <div class="form-group">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-input" placeholder="Dr. Sarah Rao" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" placeholder="name@organization.org" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Organization <span class="form-label-optional">— Optional</span></label>
+                <input type="text" class="form-input" placeholder="National Meteorological Center">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" placeholder="••••••••••••" required>
+              </div>
+
+              <button type="submit" class="btn btn-primary auth-submit-btn">
+                Create Account
+              </button>
+
+              <div class="auth-toggle-prompt">
+                Already have an account? <a class="auth-toggle-link" onclick="navigationManager.switchAuthForm('signin');">Sign In</a>
+              </div>
+            </form>
+
+            <!-- Sign In Form (Section 26) -->
+            <form id="signInForm" style="display: none;" onsubmit="event.preventDefault(); alert('Signed in successfully.');">
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" placeholder="user@organization.org" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" placeholder="••••••••••••" required>
+              </div>
+
+              <button type="submit" class="btn btn-primary auth-submit-btn">
+                Sign In
+              </button>
+
+              <div class="auth-toggle-prompt">
+                Don't have an account? <a class="auth-toggle-link" onclick="navigationManager.switchAuthForm('signup');">Sign Up</a>
+              </div>
+            </form>
+
+            <!-- Platform Highlights -->
+            <div class="auth-benefit-chips">
+              <div class="auth-benefit-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>Automated multi-model blending (AI + NWP + Ensemble)</span>
+              </div>
+              <div class="auth-benefit-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>Custom regional alerts for extreme weather events</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECONDARY INFO: ABOUT MODAL (Accessible via footer)
+           Preserves background project documentation cleanly.
+           ========================================================================== -->
+      <div id="aboutModal" style="display: none; position: fixed; inset: 0; background: rgba(11, 31, 58, 0.5); backdrop-filter: blur(2px); z-index: 250; align-items: center; justify-content: center; padding: 20px;">
+        <div id="aboutModalBackdrop" style="position: absolute; inset: 0;"></div>
+        <div class="card" style="position: relative; width: 100%; max-width: 580px; z-index: 260; padding: 28px; max-height: 85vh; overflow-y: auto;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="font-size: var(--font-size-lg); font-weight: 700; color: var(--color-navy);">About WeatherBlend AI</h3>
+            <button class="drawer-close" id="closeAboutModalBtn" aria-label="Close">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <div style="font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.6;">
+            <p><strong>WeatherBlend AI</strong> combines numerical weather prediction (NWP), artificial intelligence models, and ensemble forecasts into a unified, accurate forecast.</p>
+            <div style="margin: 16px 0; padding: 14px; background-color: var(--bg-main); border-radius: var(--radius-md); border-left: 3px solid var(--color-forest-green);">
+              <strong>Core Architecture:</strong><br>
+              AI Models + Physical NWP + Ensembles &rarr; Adaptive Skill Blending &rarr; Blended Forecast
+            </div>
+            <p style="color: var(--text-secondary); font-size: var(--font-size-xs);">Data sources include global atmospheric physics, machine learning models, and 50-member ensemble clusters calibrated for regional accuracy.</p>
+          </div>
+          <div style="margin-top: 20px; text-align: right;">
+            <button class="btn btn-primary" onclick="document.getElementById('aboutModal').style.display = 'none';">Close</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ==========================================================================
+         FOOTER
+         WeatherBlend AI, Operational status, sources, secondary about link
+         ========================================================================== -->
+    <footer class="app-footer">
+      <div class="footer-info">
+        <div class="footer-brand">WeatherBlend AI &mdash; Hybrid AI–NWP Weather Forecasting</div>
+        <div>Forecast System: <strong style="color: var(--color-forest-green);">Operational</strong> &bull; <span id="footerLastUpdate">Updated recently</span></div>
+        <div>Combining AI models, physical weather simulations, and ensemble forecasts.</div>
+      </div>
+      <div class="footer-links">
+        <a href="#about" id="footerAboutLink">About WeatherBlend AI</a>
+        <a href="#privacy" onclick="alert('WeatherBlend Data Privacy & Usage Policies');">Privacy</a>
+        <a href="#terms" onclick="alert('WeatherBlend Meteorological Terms of Service');">Terms</a>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- GLOBAL LOADING FEEDBACK -->
+<div id="globalLoadingOverlay" style="display: none; position: fixed; inset: 0; background: rgba(246, 248, 247, 0.7); backdrop-filter: blur(3px); z-index: 300; align-items: center; justify-content: center;">
+  <div class="loading-box" style="background: #FFFFFF; max-width: 340px; width: 90%;">
+    <div class="loading-spinner"></div>
+    <div class="loading-title" id="globalLoadingTitle">Updating Forecast...</div>
+    <div class="loading-desc" id="globalLoadingDesc">Blending AI, NWP and ensemble predictions.</div>
+  </div>
+</div>
+
+<!-- App Scripts -->
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/map.js"></script>
+<script src="js/alerts.js"></script>
+<script src="js/assistant.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

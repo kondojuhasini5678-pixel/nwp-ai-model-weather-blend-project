@@ -1,0 +1,206 @@
+/* ==========================================================================
+   WeatherBlend AI - Weather Map Styles
+   Navy + Forest Green Themed Leaflet Controls & Overlays
+   ========================================================================== */
+
+.map-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.map-controls-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.map-layer-selector {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.layer-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-main);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.layer-btn:hover {
+  border-color: var(--color-forest-green);
+  color: var(--color-forest-green);
+}
+
+.layer-btn.active {
+  background-color: var(--color-navy);
+  border-color: var(--color-navy);
+  color: #FFFFFF;
+}
+
+/* Map Viewport Area */
+.map-viewport-wrapper {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+  background-color: #E6EFF5;
+}
+
+#weatherMap {
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+/* Compact Weather Legend */
+.map-legend-overlay {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  z-index: 20;
+  box-shadow: var(--shadow-card);
+  min-width: 240px;
+}
+
+.legend-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.legend-gradient-bar {
+  height: 8px;
+  border-radius: var(--radius-full);
+  margin-bottom: 6px;
+  background: linear-gradient(to right, #BCD5C7, #4CAF50, #FDD835, #FB8C00, #C62828);
+}
+
+.legend-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Custom Location Pin Marker */
+.custom-weather-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.pin-bubble {
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--color-navy);
+  border-radius: var(--radius-md);
+  padding: 4px 8px;
+  box-shadow: 0 2px 6px rgba(11, 31, 58, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-navy);
+  white-space: nowrap;
+}
+
+.pin-pointer {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--color-navy);
+  margin-top: -1px;
+}
+
+/* Custom Leaflet Popup */
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius-card) !important;
+  box-shadow: var(--shadow-hover) !important;
+  padding: 0 !important;
+  border: 1px solid var(--border-color);
+  background: #FFFFFF !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: 270px !important;
+}
+
+.map-popup-card {
+  padding: 16px;
+}
+
+.map-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.map-popup-city {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.map-popup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.popup-metric {
+  background-color: var(--bg-main);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+}
+
+.popup-metric-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.popup-metric-val {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.map-popup-model {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  padding: 6px 10px;
+  background-color: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.map-popup-model strong {
+  color: var(--color-forest-green);
+}

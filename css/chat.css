@@ -1,0 +1,199 @@
+/* ==========================================================================
+   WeatherBlend AI - Weather Assistant Chat Styles
+   Accessible, Clean, Conversational Weather Assistant
+   ========================================================================== */
+
+.assistant-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height) - 100px);
+  min-height: 560px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* Navy Header */
+.assistant-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-navy);
+  color: #FFFFFF;
+}
+
+.assistant-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Forest Green Avatar */
+.assistant-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-forest-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.assistant-avatar svg {
+  width: 20px;
+  height: 20px;
+  stroke: #FFFFFF;
+}
+
+.assistant-title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.assistant-sub {
+  font-size: var(--font-size-xs);
+  color: #CBD5E1;
+  margin-top: 2px;
+}
+
+/* Chat Messages Stream Area */
+.chat-messages-area {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background-color: #FAFCFB;
+}
+
+.message-row {
+  display: flex;
+  gap: 12px;
+  max-width: 82%;
+}
+
+.message-row.user-msg {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.message-row.ai-msg {
+  align-self: flex-start;
+}
+
+.message-bubble {
+  padding: 14px 18px;
+  border-radius: var(--radius-card);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  position: relative;
+}
+
+/* User Message: Navy */
+.message-row.user-msg .message-bubble {
+  background-color: var(--color-navy);
+  color: #FFFFFF;
+  border-bottom-right-radius: 4px;
+}
+
+/* AI Message: Crisp White with Soft Border */
+.message-row.ai-msg .message-bubble {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-bottom-left-radius: 4px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.message-time {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  text-align: right;
+}
+
+.message-row.ai-msg .message-time {
+  text-align: left;
+}
+
+/* Suggested Question Chips (Only 4 simple questions) */
+.suggested-questions-tray {
+  padding: 12px 24px;
+  border-top: 1px solid var(--border-light);
+  background-color: var(--bg-secondary);
+}
+
+.suggested-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.suggested-chips-list {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.question-chip {
+  white-space: nowrap;
+  padding: 7px 14px;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-navy);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.question-chip:hover {
+  background-color: var(--color-forest-green-subtle);
+  border-color: var(--color-forest-green-border);
+  color: var(--color-forest-green);
+}
+
+/* Input Bar */
+.chat-input-bar {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  display: flex;
+  gap: 12px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 11px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  background-color: var(--bg-main);
+  outline: none;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.chat-input:focus {
+  border-color: var(--color-forest-green);
+  background-color: #FFFFFF;
+}
+
+.chat-send-btn {
+  padding: 0 22px;
+}

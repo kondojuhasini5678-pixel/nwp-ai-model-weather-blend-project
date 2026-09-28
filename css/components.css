@@ -1,0 +1,790 @@
+/* ==========================================================================
+   WeatherBlend AI - UI Component Styles
+   Navy Blue + Forest Green + Alert Red Theme
+   Clean, Accessible, Professional Weather Forecasting Product
+   ========================================================================== */
+
+/* ==========================================================================
+   Cards & Containers
+   ========================================================================== */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  position: relative;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.card-title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-navy);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Primary Blended Forecast Card (Homepage Hero)
+   ========================================================================== */
+.hero-forecast-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 20px;
+}
+
+.hero-forecast-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.blended-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-forest-green-subtle);
+  color: var(--color-forest-green);
+  border: 1px solid var(--color-forest-green-border);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.blended-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-forest-green);
+}
+
+.hero-primary-val-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 12px 0 8px 0;
+}
+
+.hero-primary-val {
+  font-size: var(--font-size-4xl);
+  font-weight: 800;
+  color: var(--color-navy);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.hero-primary-label {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.hero-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.hero-meta-item strong {
+  color: var(--color-navy);
+  font-weight: 600;
+}
+
+.confidence-tag-high {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-forest-green);
+  font-weight: 600;
+  background-color: var(--color-forest-green-subtle);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+/* Simple Forecast Timeline: Today | +24h | +48h | +72h */
+.simple-timeline {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  gap: 4px;
+  margin-top: 18px;
+}
+
+.timeline-step {
+  flex: 1;
+  text-align: center;
+  padding: 10px 8px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: all var(--transition-fast);
+}
+
+.timeline-step:hover {
+  color: var(--color-navy);
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.timeline-step.active {
+  background-color: var(--color-navy);
+  color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(11, 31, 58, 0.2);
+}
+
+/* ==========================================================================
+   Three Compact Weather Summaries (Homepage)
+   Temperature | Wind | Rainfall
+   ========================================================================== */
+.compact-weather-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.compact-weather-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-card);
+}
+
+.compact-weather-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.compact-weather-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.compact-weather-val {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-navy);
+  line-height: 1.2;
+}
+
+.compact-weather-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.compact-weather-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-forest-green);
+  flex-shrink: 0;
+}
+
+.compact-weather-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--color-forest-green);
+}
+
+/* ==========================================================================
+   Compact Weather Alert Banner (Homepage)
+   Red ONLY when there is an active alert
+   ========================================================================== */
+.compact-alert-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-alert-red-subtle);
+  border: 1px solid var(--color-alert-red-border);
+  border-left: 5px solid var(--color-alert-red);
+  border-radius: var(--radius-card);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  gap: 14px;
+}
+
+.compact-alert-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.compact-alert-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--color-alert-red);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.compact-alert-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: #FFFFFF;
+}
+
+.compact-alert-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-alert-red);
+}
+
+.compact-alert-desc {
+  font-size: var(--font-size-xs);
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
+/* Normal / No Alert State */
+.compact-alert-banner.normal-status {
+  background-color: var(--color-forest-green-subtle);
+  border: 1px solid var(--color-forest-green-border);
+  border-left: 5px solid var(--color-forest-green);
+}
+
+.compact-alert-banner.normal-status .compact-alert-icon {
+  background-color: var(--color-forest-green);
+}
+
+.compact-alert-banner.normal-status .compact-alert-title {
+  color: var(--color-forest-green);
+}
+
+/* ==========================================================================
+   Model Blend "How the forecast is combined" Component
+   ========================================================================== */
+.model-blend-section {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.blend-bars-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.blend-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.blend-bar-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.blend-bar-track {
+  height: 8px;
+  background-color: var(--bg-main);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.blend-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.6s ease;
+}
+
+.blend-bar-fill.ai { background-color: var(--model-ai); }
+.blend-bar-fill.nwp { background-color: var(--model-nwp); }
+.blend-bar-fill.ensemble { background-color: var(--model-ensemble); }
+
+.blend-plain-summary {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  background-color: var(--bg-main);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--color-forest-green);
+}
+
+/* Subtle Hero Identity Tag */
+.blended-hero-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  padding: 12px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.blended-hero-tag strong {
+  color: var(--color-navy);
+}
+
+/* ==========================================================================
+   Buttons & Controls
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--color-navy);
+  color: #FFFFFF;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-navy-hover);
+  box-shadow: 0 2px 6px rgba(11, 31, 58, 0.25);
+}
+
+.btn-outline {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--color-navy);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-forest-green);
+  color: var(--color-forest-green);
+  background-color: var(--bg-subtle);
+}
+
+/* Segmented Control / Metric Switcher */
+.segmented-control {
+  display: inline-flex;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  gap: 2px;
+}
+
+.seg-btn {
+  padding: 6px 14px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.seg-btn:hover {
+  color: var(--color-navy);
+}
+
+.seg-btn.active {
+  background-color: var(--bg-secondary);
+  color: var(--color-navy);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+/* ==========================================================================
+   Alert Card Styles (Alerts Page)
+   Forest green for low/normal, Red for active/high-risk
+   ========================================================================== */
+.alert-card {
+  padding: 20px;
+  margin-bottom: 16px;
+  border-left: 4px solid var(--border-color);
+}
+
+.alert-card.high-risk {
+  border-left-color: var(--color-alert-red);
+}
+
+.alert-card.moderate-risk {
+  border-left-color: var(--color-amber);
+}
+
+.alert-card.low-risk {
+  border-left-color: var(--color-forest-green);
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.alert-type-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.alert-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  background-color: var(--bg-main);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin: 12px 0 0 0;
+}
+
+.popup-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.popup-metric-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.popup-metric-val {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+/* Badges */
+.badge-risk {
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.badge-risk.low {
+  background-color: var(--color-forest-green-subtle);
+  color: var(--color-forest-green);
+  border: 1px solid var(--color-forest-green-border);
+}
+
+.badge-risk.moderate {
+  background-color: var(--color-amber-subtle);
+  color: var(--color-amber);
+  border: 1px solid var(--color-amber-border);
+}
+
+.badge-risk.high {
+  background-color: var(--color-alert-red-subtle);
+  color: var(--color-alert-red);
+  border: 1px solid var(--color-alert-red-border);
+}
+
+/* ==========================================================================
+   Forecast Page Summary Grid
+   ========================================================================== */
+.forecast-summary-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.forecast-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.forecast-summary-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.forecast-summary-val {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+/* Loading Box */
+.loading-box {
+  padding: 32px 20px;
+  text-align: center;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-hover);
+}
+
+.loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--color-forest-green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.loading-desc {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .compact-weather-grid {
+    grid-template-columns: 1fr;
+  }
+  .alert-meta-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .forecast-summary-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Get Started / Authentication Component Styles
+   Navy Blue + Forest Green Accent, Clean, High Contrast
+   ========================================================================== */
+.auth-wrapper {
+  max-width: 480px;
+  margin: 36px auto;
+  width: 100%;
+}
+
+.auth-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.auth-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-navy);
+  letter-spacing: -0.01em;
+}
+
+.auth-subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.auth-tabs {
+  display: flex;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.auth-tab-btn:hover {
+  color: var(--color-navy);
+}
+
+.auth-tab-btn.active {
+  background-color: var(--bg-secondary);
+  color: var(--color-navy);
+  box-shadow: 0 1px 3px rgba(11, 31, 58, 0.08);
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-navy);
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+
+.form-label-optional {
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-left: 4px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input:focus {
+  border-color: var(--color-forest-green);
+  box-shadow: 0 0 0 3px var(--color-forest-green-subtle);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+.auth-submit-btn {
+  width: 100%;
+  padding: 11px 16px;
+  font-size: var(--font-size-sm);
+  margin-top: 6px;
+}
+
+.auth-toggle-prompt {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.auth-toggle-link {
+  color: var(--color-forest-green);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.auth-toggle-link:hover {
+  text-decoration: underline;
+}
+
+.auth-benefit-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.auth-benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  background-color: var(--bg-main);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.auth-benefit-item svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--color-forest-green);
+  flex-shrink: 0;
+}
+
